@@ -1,0 +1,35 @@
+#page-wrap::after{
+  content: "Layout ancho";
+}
+h1, p, h3,h2{
+  font-family: Arial;
+  font-size: 2em;
+  color:black;
+}
+ul, li{
+  font-family: Arial;
+  font-size: 1.2em;
+  color:black;
+}
+
+a{
+  font-family: Arial;
+  font-size: 1.2em;
+}
+nav{
+  float: left;
+  width: 15%;
+  height: 120px ;
+}
+nav span{
+  margin: 0px 10px 0px 0px auto;
+}
+section{
+  float: right;
+  width: 80%;
+  height: 200px auto;
+}
+footer{
+  clear: both;
+  display: block;
+}

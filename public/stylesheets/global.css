@@ -1,0 +1,80 @@
+body{
+  background-image: url(background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+input{
+  text-align: center;
+  padding: 5px  5px;
+  font-size:xx-large;
+  margin-left: 8%;
+  width: 40%;
+  opacity: 100;
+
+}
+
+th{
+  font-family: Arial;
+  font-size: 1.2em;
+  color: white;
+}
+
+button{
+  margin-right: 20%;
+  float:  right;
+}
+
+th, td{
+  padding-bottom: 5%;
+  color: white;
+}
+
+label{
+  font-size: 1.2em;
+  font-family: Arial;
+  font-weight: bold;
+  color: blue;
+}
+
+
+table {
+  margin-left: 14%;
+}
+
+#converted {
+  font-family: Arial;
+  font-weight: bold;
+}
+
+#page-wrap {
+  margin: 15% auto;
+  color:blue;
+}
+#page-wrap > .main{
+  border:1px solid #999;
+  padding: 1%;
+  margin-bottom: 1px;
+  color: black;
+}
+
+section > div {
+  padding: 20px;
+}
+
+header, nav, section, footer {
+  background: #eee;
+  opacity: 0.7;
+  text-align: center;
+}
+
+nav span {
+  margin: 0px 10px 0px 0px auto;
+}
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}

@@ -1,0 +1,12 @@
+#page-wrap::after{
+  content: "Layout pequeño";
+}
+h2 span , section h3{
+  display: none;
+}
+body{
+  font-size: xx-large;
+}
+footer, input, textarea{
+  font-size: large;
+}
