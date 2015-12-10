@@ -18,7 +18,6 @@ after ->
 describe 'Selenium Webdriver tutorial', ->
 
 
-
   it 'has the title of the post in the window\'s title', ->
     @driver.get 'http://bites.goodeggs.com/posts/selenium-webdriver-nodejs-tutorial/'
     @timeout 5000
