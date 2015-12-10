@@ -18,20 +18,26 @@ after ->
 describe 'Selenium Webdriver tutorial', ->
 
 
-  it 'has the title of the post in the window\'s title', ->
-    @driver.get 'http://bites.goodeggs.com/posts/selenium-webdriver-nodejs-tutorial/'
+  it 'Se puede visualizar el titulo del inicio', ->
+    @driver.get 'localhost:8080'
     @timeout 5000
-    expect(@driver.getTitle()).to.eventually.contain
-    'Getting started with Selenium Webdriver for node.js'
+    expect(@driver.getTitle()).to.eventually.contain 'Conversor de Temperatura'
 
-  it 'has publication date', ->
-    @driver.get 'http://bites.goodeggs.com/posts/selenium-webdriver-nodejs-tutorial/'
+  it 'Posee un menu', ->
+    @driver.get 'localhost:8080'
     @timeout 5000
-    text = @driver.findElement(css: '.post .meta time').getText()
-    expect(text).to.eventually.equal 'December 30th, 2014'
+    text = @driver.findElement(id:'n1').getText()
+    expect(text).to.eventually.equal 'Inicio Convertir Temperatura'
 
-  it 'links back to the homepage', ->
-    @driver.get 'http://bites.goodeggs.com/posts/selenium-webdriver-nodejs-tutorial/'
+
+  it 'Se puede ir a Convertir Temperatura', ->
+    @driver.get 'localhost:8080'
     @timeout 5000
-    @driver.findElement(linkText: 'Bites').click()
-    expect(@driver.getCurrentUrl()).to.eventually.equal 'http://bites.goodeggs.com/'
+    @driver.findElement(linkText: 'Comienza a convertir!').click()
+    expect(@driver.getCurrentUrl()).to.eventually.equal 'http://localhost:8080/conversor/temperatura'
+
+  it 'Enlace al conversor de temperatura', ->
+    @driver.get 'localhost:8080/conversor/temperatura'
+    @timeout 5000
+    @driver.findElement(linkText: 'Inicio').click()
+    expect(@driver.getCurrentUrl()).to.eventually.equal 'http://localhost:8080/'
