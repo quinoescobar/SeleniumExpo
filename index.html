@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="exposición-selenium-web-driver">Exposición Selenium Web Driver</h1>
+<h1 id="selenium">Selenium</h1>
+<p>Selenium es una herramienta que permite realizar testing sin tener que emplear un lenguaje de scripting enfocado a pruebas, también permite automatizar los navegadores web en muchas plataformas y puede ser controlado por distintos lenguajes de programación, lenguajes de dominio especifico y testing frameworks.</p>
+<p>Un Webdriver es una interfaz de control que permite la introspección y control de agentes de usuario. Proporciona un protocolo de conexión para para manejar remotamente el comportamiento de los navegadores web. Permite la manipulación de los elementos del árbol DOM en los documentos web.</p>
+<p>Es utilizado principalmente para permitir pruebas automatizadas de agente de usuario a partir de un proceso de control separado , pero también permite controlar los navegadores mediante scripts.</p>
+<p><img src="public/images/selenium-webdriver-workflow.jpg" title="selenium-webdriver-workflow" alt="schema" /> Figura 1 Workflow Selenium</p>
+<p><img src="public/images/selenium_diagram.png" title="selenium-diagram" alt="schema" /> Figura 2 Diagrama Selenium</p>
+<p>En general Selenium esta enfocado al testing de aplicaciones web, pero también es posible automatizar tareas de administración web y cuenta con el apoyo de importantes navegares web como por ejemplo Mozilla Firefox.</p>
+<p><img src="public/images/ejemplo1.gif" title="selenium-diagram" alt="schema" /> Figura 3 Ejemplo Selenium visualmente ## Tutorial</p>
+<p>En el tutorial se utilizará la práctica Conversor de Temperatura realizada con anterioridad.</p>
+<p>Se debe crear la estructura de la aplicación con Express-Generator, o en si lo prefiere usar la de la práctica 5.</p>
+<h4 id="paquetes-importantes-a-instalar">Paquetes importantes a instalar</h4>
+<pre><code>    npm install --save
+    selenium-webdriver@2.48.2
+    mocha@2.3.3
+    chai@&quot;3.4.1
+    chai-as-promised@5.1.0
+    coffee-script@ &quot;1.10.0</code></pre>
+<p>Una vez se ha creado la estructura de la aplicación, se procede a crear un directorio 'tests' y donde se almacenarán los ficheros que contienen el código que realizará los test a nuestra aplicación.</p>
+<p>Se crea el fichero test.coffee y se añade:</p>
+<p>Importación modulos necesarios</p>
+<pre><code>      webdriver = require &#39;selenium-webdriver&#39;
+      chai = require &#39;chai&#39;
+      chai.use require &#39;chai-as-promised&#39;
+      expect = chai.expect</code></pre>
+<p>Se especifica que webdriver se va a utilizar, con que navegador.</p>
+<pre><code>      before -&gt;
+        @timeout 10000
+        @driver = new webdriver.Builder()
+          .withCapabilities(webdriver.Capabilities.firefox())
+          .build()
+        @driver.getWindowHandle()</code></pre>
+<p>Despues de finalizar las pruebas, se cierra y limpia el navegador.</p>
+<pre><code>      after -&gt;
+        @driver.quit();</code></pre>
+<p>Despues se empieza a poner los test dentro del bloque describe, para que estén en un lugar lógico.</p>
+<pre><code>    describe &#39;Webdriver tutorial&#39;, -&gt;
+      ###
+      ... Some tests ...
+      ###</code></pre>
+<p>e.g. : Ir a una página</p>
+<pre><code>    it &#39;Should let me go to the URL and see the page\&#39;s title&#39;, -&gt;
+      @driver.get &#39;google.com&#39;
+      @timeout 5000
+      expect(@driver.getTitle()).to.eventually.contain &#39;Google&#39;</code></pre>
+<p>Manipular elementos árbol DOM</p>
+<pre><code>      @driver.findElement(linkText: &#39;Imagenes&#39;)
+      @driver.findElement(xpath: &#39;//[@id=&quot;content&quot;]/div/article/div/pre[1]&#39;)
+      @driver.findElement(js: &#39;return document.getElementById(&quot;Result&quot;)&#39;)
+      @driver.findElement(id: &#39;labelID&#39;)
+      @driver.findElement(name: &#39;consulta&#39;)</code></pre>
+<p>Interactuar con la págetWindowHandle</p>
+<pre><code>      it &#39;links back to the Google\&#39;s index, -&gt;
+        @driver.findElement(linkText: &#39;Google&#39;).click()
+        expect(@driver.getCurrentUrl()).to.eventually.equal &#39;http://www.google.com/&#39;</code></pre>
+<p>Una vez se tengan los test implementados se corren con el comando:</p>
+<pre><code>    mocha tests/test.coffee --compilers coffee:coffee-script/register</code></pre>
+<p>Es posible se abra un navegador y se mueva solo, ver Figura 3. En el caso de tener la aplicación corriendo en un servidor sin desktop environtment es necesario emular un navegador, para esto es necesario installar un X virtual framebuffer:</p>
+<pre><code>    apt-get install Xvfb</code></pre>
+<p>Se debe instalar también un navegador que en nuestro caso es Firefox En la ruta</p>
+<pre><code>    /etc/apt/sources.list</code></pre>
+<p>Como root añadir</p>
+<pre><code>  ppa:mozillateam/firefox-stable</code></pre>
+<p>Seguido se actualiza e instala</p>
+<pre><code>  sudo apt-get update
+  sudo apt-get install firefox</code></pre>
+<p>Una vez todo instalado, se procede a correr Xvfb en una terminal, para este tutorial asumimos un display, 10.</p>
+<pre><code>  sudo Xvfb :10 -ac</code></pre>
+<p>Se mínimiza esta terminal.</p>
+<p>Antes de ejecutar las pruebas es necesario establecer la variable de ambiente DISPLAY</p>
+<pre><code>  export DISPLAY=:10</code></pre>
+<p>Se ejecutan los test</p>
+<pre><code>    mocha tests/test.coffee --compilers coffee:coffee-script/register</code></pre>
+<h5 id="about-me">About Me</h5>
+<pre><code>José Joaquín Escobar Gómez.
+Estudiante Ing. Informática
+quinoescobar@gmail.com
+Universidad de La Laguna
+San Cristóbal de La Laguna - España</code></pre>
+<h5 id="referencias">Referencias</h5>
+<ul>
+<li><p>Enlace página <a href="http://www.seleniumhq.org/">Selenium</a></p></li>
+<li><p>Enlace página <a href="https://code.google.com/p/selenium/wiki/WebDriverJs#Writing_Tests">guía de usuario selenium-webdriver</a></p></li>
+<li><p>Enlace página <a href="http://coffeescript.org/">Coffee Script</a></p></li>
+<li><p>Enlace página <a href="http://chaijs.com/api/bdd/">Chai</a></p></li>
+<li><p>Enlace página <a href="https://github.com/domenic/chai-as-promised/">Chai-as-promised</a></p></li>
+<li><p>Enlace página <a href="http://mochajs.org/">Mocha</a></p></li>
+<li><p>Enlace Repositorio <a href="https://quinoescobar.github.io/SeleniumExpo">SeleniumExpo</a></p></li>
+<li><p>Enlace página author <a href="https://quinoescobar.github.io">Quinoescobar</a></p></li>
+</ul>
+</body>
+</html>
