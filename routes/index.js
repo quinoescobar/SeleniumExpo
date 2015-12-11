@@ -7,5 +7,7 @@ var tempController = require('../controllers/tempController');
 //   res.render('index', { title: 'Express' });
 // });
 router.get('/', tempController.index);
+router.get('/conversor/temperatura', tempController.conversorTemperatura);
+router.get('/conversor/temperatura/convertir', tempController.convertir);
 
 module.exports = router;
